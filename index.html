@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#111827" />
+  <title>ป้อมพิทักษ์ — เกมกันฐาน</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="ป้อมพิทักษ์"><span class="brand-mark">⬡</span><span>ป้อมพิทักษ์<small>FRONTIER DEFENSE</small></span></a>
+      <div class="top-actions"><span class="status"><i></i> พร้อมรบ</span><button class="icon-btn" id="soundBtn" title="เปิด/ปิดเสียง" aria-label="เปิดหรือปิดเสียง">♫</button><button class="icon-btn" id="helpBtn" title="วิธีเล่น" aria-label="วิธีเล่น">?</button></div>
+    </header>
+    <section class="game-layout">
+      <section class="battle-column">
+        <div class="battle-head"><div><div class="eyebrow">เขตชายแดน · แผนที่ 01</div><h1>ด่านป่าหมอก</h1></div><div class="wave-pill"><span class="wave-icon">◈</span><span><b id="waveLabel">เวฟ 0</b><small id="waveSub">เตรียมพร้อม</small></span></div></div>
+        <div class="canvas-wrap"><canvas id="game" width="960" height="600" aria-label="สนามรบเกมกันฐาน"></canvas><div class="toast" id="toast"></div><div class="overlay hidden" id="endOverlay"><div class="end-card"><div class="end-icon" id="endIcon">✦</div><div class="eyebrow" id="endEyebrow">ภารกิจสิ้นสุด</div><h2 id="endTitle">ฐานถูกทำลาย</h2><p id="endText">ลองวางป้อมให้ครอบคลุมเส้นทางมากขึ้น</p><button class="primary-btn" id="restartBtn">เริ่มเกมใหม่ <span>↗</span></button></div></div><div class="overlay hidden" id="helpOverlay"><div class="help-card"><button class="close-btn" id="closeHelp">×</button><div class="eyebrow">คู่มือผู้บัญชาการ</div><h2>ปกป้องฐานให้ได้</h2><p>คลิกช่องว่างข้างทางเพื่อสร้างป้อม ศัตรูจะเดินตามเส้นทางจากซ้ายไปยังฐานทางขวา</p><div class="help-steps"><span>① เลือกป้อมจากแถบด้านล่าง</span><span>② คลิกตำแหน่งเพื่อวาง (ต้องมีเหรียญ)</span><span>③ เลือกป้อมที่สร้างแล้วเพื่ออัปเกรดหรือขาย</span><span>④ ใช้ฝนดาวตกเมื่อศัตรูมาเป็นกลุ่ม</span></div><button class="primary-btn" id="gotIt">เข้าใจแล้ว <span>✓</span></button></div></div></div>
+        <div class="battle-controls"><div class="legend"><span><i class="dot dot-enemy"></i>ศัตรู <b id="enemyCount">0</b></span><span><i class="dot dot-tower"></i>ป้อม <b id="towerCount">0</b></span></div><div class="control-buttons"><button class="control-btn start-wave" id="waveBtn">▶ <span>เริ่มเวฟ</span></button><button class="control-btn" id="pauseBtn">Ⅱ <span>หยุด</span></button><button class="control-btn" id="speedBtn">» <span>1×</span></button></div></div>
+        <div class="build-panel"><div class="section-title"><span>คลังป้อม</span><small>เลือกป้อม แล้วคลิกพื้นที่ว่าง</small></div><div class="tower-options" id="towerOptions"></div></div>
+      </section>
+      <aside class="sidebar">
+        <div class="resource-card"><div class="resource-top"><div><span class="eyebrow">พลังชีวิตฐาน</span><div class="base-value"><span class="heart">♥</span><strong id="baseHp">20</strong><small>/ 20</small></div></div><div class="shield-art">⬡</div></div><div class="hp-track"><i id="hpBar"></i></div><div class="resource-bottom"><span>เหรียญ</span><strong><span class="coin">◉</span> <b id="gold">180</b></strong></div></div>
+        <div class="mission-card"><div class="section-title"><span>ภารกิจ</span><span class="live-tag"><i></i> กำลังดำเนินการ</span></div><div class="mission-row"><span class="mission-icon">♜</span><div><b>รักษาฐานทัพ</b><small>อย่าให้ศัตรูผ่านไปถึงฐาน</small></div></div><div class="mission-progress"><div><span>กำจัดศัตรู</span><b id="killsText">0 / 25</b></div><div class="progress-track"><i id="killsBar"></i></div></div></div>
+        <div class="selected-card" id="selectedCard"><div class="section-title"><span>ข้อมูลป้อม</span><span class="muted-tag" id="selectedTag">ยังไม่ได้เลือก</span></div><div class="empty-selection" id="emptySelection"><span>⌖</span><b>เลือกป้อมบนสนาม</b><small>เพื่อดูข้อมูล อัปเกรด หรือขาย</small></div><div class="tower-info hidden" id="towerInfo"><div class="tower-info-head"><div class="tower-emblem" id="towerEmblem">⌁</div><div><b id="towerName">ป้อมลูกศร</b><small id="towerLevel">ระดับ 1</small></div></div><div class="stat-grid"><div><small>พลังโจมตี</small><b id="towerDamage">—</b></div><div><small>ระยะยิง</small><b id="towerRange">—</b></div><div><small>ความเร็ว</small><b id="towerSpeed">—</b></div><div><small>เป้าหมาย</small><b>ภาคพื้น</b></div></div><div class="tower-actions"><button class="upgrade-btn" id="upgradeBtn">อัปเกรด <span id="upgradeCost">—</span></button><button class="sell-btn" id="sellBtn" title="ขายป้อม">ขาย</button></div></div></div>
+        <div class="ability-card"><div class="section-title"><span>ความสามารถ</span><small>กดใช้ระหว่างเวฟ</small></div><button class="ability-btn" id="meteorBtn"><span class="ability-icon">☄</span><span class="ability-copy"><b>ฝนดาวตก</b><small id="abilityText">โจมตีศัตรูทั้งหมด · พร้อมใช้</small></span><kbd id="abilityKey">Q</kbd></button></div>
+        <div class="event-card"><div class="section-title"><span>บันทึกสนามรบ</span><span class="record-live">LIVE</span></div><div class="event-list" id="eventList"><div class="event-item"><i class="event-dot blue"></i><span>เตรียมแนวป้องกันให้พร้อม</span><small>ตอนนี้</small></div><div class="event-item"><i class="event-dot gold-dot"></i><span>กำจัดศัตรูเพื่อรับเหรียญ</span><small>แนะนำ</small></div></div></div>
+      </aside>
+    </section>
+    <footer><span>© 2026 ป้อมพิทักษ์</span><span>ทุกการวางป้อมเปลี่ยนผลของสนามรบ</span><span class="version">BETA 0.1</span></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
